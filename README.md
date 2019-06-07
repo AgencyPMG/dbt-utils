@@ -394,7 +394,7 @@ Usage:
 
 ---
 ### Logger
-#### pretty_time ([source](macros/logger/pretty_output_msg.sql))
+#### pretty_time ([source](macros/logger/pretty_time.sql))
 This macro returns a string of the current timestamp, optionally taking a datestring format.
 ```sql
 {#- This will return a string like '14:50:34' -#}
@@ -404,26 +404,25 @@ This macro returns a string of the current timestamp, optionally taking a datest
 {{ dbt_utils.pretty_time(format='%Y-%m-%d %H:%M:%S') }}
 ```
 
-#### pretty_output_msg
+#### pretty_log_format ([source](macros/logger/pretty_log_format.sql))
 This macro formats the input in a way that will print nicely to the command line when you `log` it.
-```
+```sql
 {#- This will return a string like:
-"         + 11:07:31 | my pretty message"
+"11:07:31 + my pretty message"
 -#}
 
-{{ dbt_utils.pretty_output_msg("my pretty message") }}
+{{ dbt_utils.pretty_log_format("my pretty message") }}
 ```
-
-It is expected that this macro will be used in conjuction with the [log](https://docs.getdbt.com/reference#log) macro.
-```
-{{ log(dbt_utils.pretty_output_msg("my pretty message"), info=True) }}
+### log_info ([source](macros/logger/log_info.sql))
+This macro logs a formatted message (with a timestamp) to the command line.
+```sql
+{{ log_info(dbt_utils.log_info("my pretty message")) }}
 ```
 
 ```
 11:07:28 | 1 of 1 START table model analytics.fct_orders........................ [RUN]
-         + 11:07:31 | my pretty message
+11:07:31 + my pretty message
 ```
-
 
 ### Materializations
 #### insert_by_period ([source](macros/materializations/insert_by_period_materialization.sql))
